@@ -3,7 +3,14 @@ const routes = require('./routes');
 const app = express();
 
 app.use(express.json());
-app.use(routes);
+
+
+//not found  caso não ache a rota
+app.use((req, res, next)=>{
+    const error = new Error('Not found');
+    error.status = 404;
+    next(error);
+})
 
 //catch all
 app.use((error, req, res, next)=>{
