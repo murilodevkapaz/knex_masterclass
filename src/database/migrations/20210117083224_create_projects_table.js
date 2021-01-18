@@ -1,5 +1,6 @@
+const {onUpdatedTrigger}  = require('../../../knexfile');
 
-exports.up = knex => knex.schema.createTable('projects', table => {
+exports.up = async knex => knex.schema.createTable('projects', table => {
     table.increments('id')
     table.text('title')
 
@@ -10,7 +11,7 @@ exports.up = knex => knex.schema.createTable('projects', table => {
         .onDelete('CASCADE')//quando um usuário for deletado os projetos também serão
 
     table.timestamps(true, true)
-})
+}).then(()=> knex.raw(onUpdatedTrigger('projects')))
 
 
-exports.down = knex => knex.schema.dropTable('projects');
+exports.down = async knex => knex.schema.dropTable('projects');

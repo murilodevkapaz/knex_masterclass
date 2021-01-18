@@ -3,7 +3,8 @@ const knex = require('../database');
 
 module.exports = {
     async index(req, res) {
-        const results = await knex('users');
+        const results = await knex('users')
+            .where('deleted_at', null)//nao mostra os usuarios deletados delete soft
         return res.json(results);
     },
     async create(req, res, next) {
@@ -37,7 +38,8 @@ module.exports = {
 
             await knex('users')
                 .where({id: id})
-                .del();
+                //.del();  => aqui deleta o usuário (esse é o delete hard)
+                .update('deleted_at', new Date()); // aqui só da um delete soft setando na coluna
 
             res.send();
         }

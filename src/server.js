@@ -3,7 +3,7 @@ const routes = require('./routes');
 const app = express();
 
 app.use(express.json());
-
+app.use(routes);
 
 //not found  caso não ache a rota
 app.use((req, res, next)=>{
@@ -19,4 +19,5 @@ app.use((error, req, res, next)=>{
 })
 
 app.listen(3333, ()=> console.log('Server is running!'));
+
 
